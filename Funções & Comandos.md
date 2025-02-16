@@ -1,40 +1,140 @@
 # Funções & Comandos
 No MOD Macro existe diversos comandos ou funções para serem utilizadas. Para quem ja utilizou o excel deve entender perfeitamente o significado da palavra `função`.
-Por lá usamos o prefixo `=` para avisar ao excel que vamos digitar algum comando. No entanto no MOD de Macro não é preciso de nenhum prefixo, o MOD entende que tudo
-que for digitado se trata de **Funções** ou **comandos** como muita gente diz.
-###### 
-Abaixo está uma tabela com todas as **FUNÇÕES** inclusas no MOD de Macro
+Por lá usamos o prefixo `=` para avisar ao excel que vamos digitar alguma função. No entanto no MOD de Macro não é preciso de nenhum prefixo, o MOD já entende que tudo
+que for digitado se trata de **Funções** ou **comandos**.
+######
+Logo abaixo tem **3 tabelas** contendo os comandos que atualmente existe no **MOD Macro**, elas foram dividas em 3 partes pelo fato de suas utilidades serem diferentes.
+1. **Ações no player**, ou seja irá fazer algo com o jogador (`direção que está olhando, sons, aperta alguma tecla, envia mensagem...`)
+2. **GUI**, para quem não sabe o termo GUI se refere a "menu" (`inventário, menu esc, baú, fornalha, bigorna, mesa de encantamento...`)
+3. **Funções**, semelhante ao excel, essas funções são geralmente 80% do código da macro é feita com elas. (`ELSE,IF,DO,LOOP,TIME`) 
+---
+# Ações no Player 
+| Comando    | Formatação                                           | Descrição                                                                                                                |
+| ---------- | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| DISCONNECT | DISCONNECT()                                         | Desconecta do jogo ou servidor atual                                                                                     |
+| LOOK       | LOOK(<yaw>,[pitch],[time])                           | Fica de frente para o jogador na direção especificada, prefixando os ângulos com + ou - para movimentos relativos        |
+| LOOKS      | LOOKS(<yaw>,[pitch],[time])                          | Gira suavemente o jogador para a direção especificada, prefixando os ângulos com + ou - para movimentos relativos        |
+| PLACESIGN  | PLACESIGN([line1],[line2],[line3],[line4],[showgui]) | Coloca uma placa no mundo com o texto especificado (se você tiver um)                                                    |
+| PLAYSOUND  | PLAYSOUND(<sound>)                                   | Reproduz um som                                                                                                          |
+| RESPAWN    | RESPAWN()                                            | Renasce o jogador se você estiver morto                                                                                  |
+| SLOTCLICK  | SLOTCLICK(<slot>,[button],[shift])                   | Simula o clique no slot especificado na GUI atual, opcionalmente usando RMB e shiftkey                                   |
+| SPRINT     | SPRINT()                                             | Define o estado do jogador para corrida se houver resistência suficiente (comida)                                        |
+| UNSPRINT   | UNSPRINT()                                           | Define o estado do jogador para não correr                                                                               |
+| KEY        | KEY(<bind>)                                          | Pressiona um botão do teclado                                                                                            |
+| KEYDOWN    | KEYDOWN(<bind>)                                      | Define o estado de vinculação de teclas especificado como pressionado, funciona apenas com vinculações pressionáveis     |
+| KEYUP      | KEYUP(<bind>)                                        | Define o estado de vinculação de teclas especificado como não pressionado, funciona apenas com vinculações pressionáveis |
+| TOGGLEKEY  | TOGGLEKEY(<bind>)                                    | Alterna o estado pressionado da ligação de tecla especificada, funciona apenas com ligações pressionáveis                |
+| PRESS      | PRESS(<lwjgl_name>)                                  | Ativa a função daquela tecla conforme a config. do jogo (exemplo: KEY_ESCAPE) vai fechar o menu GUI                      |
+| TYPE       | TYPE(<text>)                                         | Injeta a sequência de teclas especificada diretamente no buffer do teclado a uma taxa de 1 tecla por tick                |
+| ECHO       | ECHO(<text>)                                         | Envia a mensagem especificada como um pacote de chat                                                                     |
+| LOG        | LOG(<text>)                                          | Envia o texto especificado no fluxo de bate-papo local                                                                   |
+| BIND       | BIND(<bind>,<keycode>)                               | Defina a ligação de chave especificada para o código de chave especificado                                               |
+# GUI
+| Comando           | Formatação                                                                  | Descrição                                                                                                                                                              |
+| ----------------- | --------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| CLEARCRAFTING     | CLEARCRAFTING()                                                             | Limpa a fila de craftar                                                                                                                                                |
+| CRAFT             | CRAFT(<item[:damage]>,[amount],[throw],[verbose])                           | Enfileira uma solicitação de craftar                                                                                                                                   |
+| CRAFTANDWAIT      | CRAFTANDWAIT(<item[:id]>,[amount],[throw],[verbose])                        | Enfileira uma solicitação de craftar e espera que ela seja concluída                                                                                                   |
+| GETITEMINFO       | GETITEMINFO(<item[:damage]>,[<&namevar>],[#maxstacksize],[&type],[#dropid]) | Nome do item Obtém o nome e outras informações do ID do item especificado, retorna "Nenhum" se o item não for válido                                                   |
+| GETSLOT           | GETSLOT(<item[:damage]>,<#idvar>,[startfromslotid])                         | ID do slot que contém um item correspondente Obtém o ID do slot que contém um item que corresponde ao ID do item especificado, retorna -1 se o item não for encontrado |
+| GETSLOTITEM       | GETSLOTITEM(<slotid>,<#idvar>,[#stacksizevar],[#datavar])                   | ID do item no slot Obtém informações sobre o item no slot especificado                                                                                                 |
+| INVENTORYDOWN     | INVENTORYDOWN([amount])                                                     | Rola o número especificado de slots para baixo na barra de atalho                                                                                                      |
+| INVENTORYUP       | INVENTORYUP([amount])                                                       | Rola o número especificado de slots para cima na barra de atalho                                                                                                       |
+| ITEMID            | ITEMID(<item>)                                                              | ID legado do item Obtém o ID legado (numérico) do item especificado                                                                                                    |
+| ITEMNAME          | ITEMNAME(<id>)                                                              | Descritor de item para o ID de item especificado Obtenha o descritor de item para um ID de item herdado (numérico)                                                     |
+| SETSLOTITEM       | SETSLOTITEM([item[:damage]],[slot],[amount])                                | Apenas modo criativo, defina o conteúdo de um slot de barra quente                                                                                                     |
+| SLOT              | SLOT(<slot>)                                                                | Seleciona o slot especificado na barra ativa                                                                                                                           |
+| SETPROPERTY       | SETPROPERTY(<control>,<property>,<value>)                                   | Define o valor da propriedade especificada no controle GUI especificado                                                                                                |
+| CHATHEIGHT        | CHATHEIGHT(<value>,[time])                                                  | Defina a altura do bate-papo do Minecraft durante o jogo 20-180                                                                                                        |
+| CHATHEIGHTFOCUSED | CHATHEIGHTFOCUSED(<value>,[time])                                           | Defina a altura do bate-papo do Minecraft enquanto estiver na GUI do bate-papo 20-180                                                                                  |
+| CHATOPACITY       | CHATOPACITY(<value>,[time])                                                 | Defina a opacidade do bate-papo do Minecraft de 0 a 100                                                                                                                |
+| CHATSCALE         | CHATSCALE(<value>,[time])                                                   | Defina a escala do bate-papo do Minecraft de 0 a 100                                                                                                                   |
+| CHATVISIBLE       | CHATVISIBLE(<value>)                                                        | Definir visibilidade do bate-papo do Minecraft                                                                                                                         |
+| CHATWIDTH         | CHATWIDTH(<value>,[time])                                                   | Defina a largura do bate-papo do Minecraft 40-320                                                                                                                      |
+| FOG               | FOG([value])                                                                | Alterna a distância de renderização ou, opcionalmente, especifica a distância de renderização                                                                          |
+| FOV               | FOV(<value>,[time])                                                         | Define o ângulo FOV em graus, especificando o tempo faz com que o valor mude suavemente                                                                                |
+| GAMMA             | GAMMA(<value>,[time])                                                       | Define o valor do brilho (porcentagem), especificando o tempo faz com que o valor mude suavemente                                                                      |
+| MUSIC             | MUSIC(<value>,[time])                                                       | Define o volume da música, especificando o tempo faz com que o valor mude suavemente                                                                                   |
+| RESOURCEPACKS     | RESOURCEPACKS([pattern],[pattern...])                                       | Define a pilha do pacote de recursos para a ordem que corresponde aos padrões especificados                                                                            |
+| SENSITIVITY       | SENSITIVITY(<value>,[time])                                                 | Define a sensibilidade do mouse (entre 0 e 200), especificando o tempo faz com que o valor mude suavemente                                                             |
+| SHADERGROUP       | SHADERGROUP([path])                                                         | Define o grupo de shaders ativo para o caminho correspondente ao shader, use "+" para selecionar o próximo grupo                                                       |
+| SETRES            | SETRES(<width>,<height>)                                                    | Define o tamanho da janela do jogo Minecraft                                                                                                                           |
+| VOLUME            | VOLUME(<value>,[time])                                                      | Define o volume do som, especificando o tempo faz com que o valor mude suavemente                                                                                      |
+| ACHIEVEMENTGET    | ACHIEVEMENTGET(<text>,[itemid[:damage]])                                    | Exibe o pop-up "obter conquista" com uma mensagem personalizada                                                                                                        |
+| BINDGUI           | BINDGUI(<slot>,<screen>)                                                    | Vincula a tela personalizada especificada ao slot especificado                                                                                                         |
+| CLEARCHAT         | CLEARCHAT()                                                                 | Limpa o fluxo de bate-papo atual                                                                                                                                       |
+| GUI               | GUI([name])                                                                 | Mostrar (ou ocultar) uma tela GUI                                                                                                                                      |
+| SHOWGUI           | SHOWGUI(<screen>,[esc_screen])                                              | Mostrar uma tela GUI personalizada                                                                                                                                     |
+# Funções
+| Comando      | Formatação                                                    | Descrição                                                                                                                                                                       |
+| ------------ | ------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| GETID        | GETID(<x>,<y>,<z>,<#idvar>,[#datavar])                        | ID do bloco na posição especificada Obtém o ID e opcionalmente o valor dos dados do bloco nas coordenadas especificadas no mundo                                                |
+| GETIDREL     | GETIDREL(<xoffset>,<yoffset>,<zoffset>,<#idvar>,[#datavar])   | ID do bloco na posição especificada Obtém o ID e opcionalmente o valor dos dados do bloco nas coordenadas especificadas em relação ao jogador                                   |
+| PICK         | PICK(<item[:damage]>,[item[:damage]],...)                     | ID do item que foi selecionado ou -1 se não selecionado Seleciona o ID do item especificado se estiver na hotbar, especifica vários itens para escolher em ordem de preferência |
+| TILEID       | TILEID(<item>)                                                | ID legado do bloco Obtém o ID legado (numérico) do bloco especificado                                                                                                           |
+| TILENAME     | TILENAME(<id>)                                                | Descritor de bloco para o ID de bloco especificado Obtenha o descritor para um ID de bloco herdado (numérico)                                                                   |
+| ASSIGN       | Ex: ASSIGN(<variável>, <expressão matemática>)                | Ajuste de variável. Pode fazer muita coisa, como somar +10 na VAR desejada                                                                                                      |
+| BREAK        | BREAK                                                         | Interrompe a execução do loop mais interno                                                                                                                                      |
+| CALCYAWTO    | CALCYAWTO(<xpos>,<zpos>,[#yaw],[#distance])                   | Valor de coord. do YAW. Calcula o ângulo de guinada absoluto para as coordenadas especificadas                                                                                  |
+| DEC          | DEC(<#var>,[amount])                                          | Diminui o contador especificado em 1 ou no valor especificado                                                                                                                   |
+| DECODE       | DECODE(<input>,[&output])                                     | String decodificada base64_decode / Bem complexo, só para PROFISSIONAIS                                                                                                         |
+| DO           | DO([count])                                                   | Inicia um loop, especifique um número de loops para limitar a contagem de loops                                                                                                 |
+| ENCODE       | ENCODE(<input>,[&output])                                     | String codificada base64_encode / Bem complexo, só para PROFISSIONAIS                                                                                                           |
+| ELSE         | ELSE                                                          | Cláusula ELSE                                                                                                                                                                   |
+| ELSEIF       | ELSEIF(<condition>)                                           | Cláusula ELSEIF                                                                                                                                                                 |
+| ENDIF        | ENDIF                                                         | Cláusula ENDIF                                                                                                                                                                  |
+| ENDUNSAFE    | ENDUNSAFE                                                     | Encerra um bloco UNSAFE ativo                                                                                                                                                   |
+| EXEC         | EXEC(<file.txt>,[taskname],[params],...)                      | Cria uma tarefa executando o arquivo de script especificado                                                                                                                     |
+| FOR          | FOR(<#var>,<start>,<end>)                                     | Inicia um loop FOR->NEXT usando o var especificado como contador de loop, #var pode ser usado dentro do loop                                                                    |
+| FOREACH      | FOREACH(<iterator>)                                           | Executa um loop no iterador especificado                                                                                                                                        |
+| GETPROPERTY  | GETPROPERTY(<control>,<property>)                             | Retorna o valor da propriedade especificada do controle GUI especificado                                                                                                        |
+| IF           | IF(<condition>)                                               | Cláusula SE                                                                                                                                                                     |
+| IFBEGINSWITH | IFBEGINSWITH(<haystack>,<needle>)                             | Cláusula IFBEGINSWITH                                                                                                                                                           |
+| IFCONTAINS   | IFCONTAINS(<haystack>,<needle>)                               | Cláusula IFCONTAINS                                                                                                                                                             |
+| IFENDSWITH   | IFENDSWITH(<haystack>,<needle>)                               | Cláusula IFENDSWITH                                                                                                                                                             |
+| IFMATCHES    | IFMATCHES(<subject>,<pattern>,[&target],[group])              | Cláusula IFMATCHES                                                                                                                                                              |
+| IIF          | IIF(<condition>,<truetext>,[falsetext])                       | Instrução IF embutida, envia texto verdadeiro como uma mensagem de bate-papo se a condição for bem-sucedida ou envia texto falso se não                                         |
+| INC          | INC(<#var>,[amount])                                          | Aumenta o contador especificado em 1 ou na quantidade especificada                                                                                                              |
+| JOIN         | JOIN(<glue>,<arrayname>,[&output])                            | Partes unidas do array Implode o array especificado em uma string delimitada                                                                                                    |
+| LCASE        | LCASE(<input>,[&output])                                      | Entrada como minúscula Converte a string de entrada em minúscula e a armazena na saída                                                                                          |
+| LOGTO        | LOGTO(<target>,<text>)                                        | Produz o texto especificado no destino especificado, o destino pode ser <aquivo>.txt salvo na past do jogo                                                                      |
+| LOOP         | LOOP                                                          | Termina um loop que foi iniciado com DO                                                                                                                                         |
+| MATCH        | MATCH(<subject>,<pattern>,[&target],[group],[default])        | Os subpadrões correspondentes Executa uma correspondência de expressão regular no assunto e coloca o resultado em &target                                                       |
+| NEXT         | NEXT                                                          | Completa um loop FOR->NEXT                                                                                                                                                      |
+| PROMPT       | PROMPT(<&target>,<paramstring>,[prompt],[override],[default]) | O valor fornecido Exibe um prompt (ou prompts) analisando os parâmetros em paramstring                                                                                          |
+| RANDOM       | RANDOM(<#target>,[max],[min])                                 | Valor aleatório Atribui um número aleatório entre mínimo e máximo ao alvo                                                                                                       |
+| REPLACE      | REPLACE(<&subject>,<search>,[replace])                        | Candidato com valores substituídos, não altera a string de origem se retornada Substitua todas as ocorrências da pesquisa por substituição em &assunto                          |
+| SET          | SET(<target>,[value])                                         | Define o valor do alvo como valor (ou TRUE se o valor for omitido)                                                                                                              |
+| SETLABEL     | SETLABEL(<labelname>,<text>,[binding])                        | Define o texto (e opcionalmente a encadernação) do rótulo especificado                                                                                                          |
+| SPLIT        | SPLIT(<delimiter>,<source>,[output])                          | Matriz contendo as partes divididas Explode a string de origem fornecida em uma matriz                                                                                          |
+| SQRT         | SQRT(<value>,[#outvar])                                       | A raiz quadrada como um número inteiro Calcule a raiz quadrada do valor e armazene-a em #outvar                                                                                 |
+| STOP         | STOP([id])                                                    | Interrompe a macro atual ou macros que correspondam ao ID especificado                                                                                                          |
+| STRIP        | STRIP(<&target>,<text>)                                       | Texto removido Remove todos os códigos de formatação do texto especificado e atribui o resultado ao &target                                                                     |
+| TOGGLE       | TOGGLE([flag])                                                | Alterna o valor do sinalizador booleano especificado                                                                                                                            |
+| UCASE        | UCASE(<input>,[&output])                                      | Entrada como maiúscula Converte a string de entrada em maiúsculas e a armazena na saída                                                                                         |
+| UNSAFE       | UNSAFE(<ticks>)                                               | Inicia um bloco UNSAFE com limite de execução definido para ticks                                                                                                               |
+| UNSET        | UNSET(<flag>)                                                 | Desconfigura a variável especificada                                                                                                                                            |
+| UNTIL        | UNTIL(<condition>)                                            | Completa um loop iniciado com DO, mas sai do loop se a condição for atendida                                                                                                    |
+| WAIT         | WAIT(<time>)                                                  | Pausa o script pelo tempo especificado, sufixo "ms" para uma espera em milissegundos ou "t" para uma espera em ticks                                                            |
+| WHILE        | WHILE(<condition>)                                            | Conclui um loop iniciado com DO, mas sai do loop se a condição não for atendida                                                                                                 |
+| ARRAYSIZE    | ARRAYSIZE(<array>,[<outvar>])                                 | Tamanho do array Armazena o tamanho do array especificado em outvar                                                                                                             |
+| INDEXOF      | INDEXOF(<array>,<outvar>,<searchfor>)                         | Índice de searchfor Obtém o primeiro índice de searchfor no array e o armazena em outvar, retorna -1 em caso de falha                                                           |
+| POP          | POP(<array>,<outvar>)                                         | Remove a última entrada do final do array e a armazena em outvar                                                                                                                |
+| PUSH         | PUSH(<array>,<value>)                                         | Acrescenta valor ao final do array                                                                                                                                              |
+| PUT          | PUT(<array>,<value>)                                          | Insere valor no primeiro ponto vazio do array                                                                                                                                   |
+| CONFIG       | CONFIG(<configname>)                                          | Mude para a configuração especificada                                                                                                                                           |
+| IMPORT       | IMPORT(<configname>)                                          | Sobrepor a configuração especificada                                                                                                                                            |
+| UNIMPORT     | UNIMPORT()                                                    | Remova a sobreposição de configuração especificada, se estiver ativa                                                                                                            |
+| STORE        | STORE(<type>,[name])                                          | Armazene um valor em uma lista usando o ambiente atual                                                                                                                          |
+| STOREOVER    | STOREOVER(<type>,[name])                                      | Armazene um valor em uma lista usando o ambiente atual e substitua-o, se existir                                                                                                |
+| TIME         | TIME(<[&target>],[format])                                    | Hora como uma string Armazena a hora e a data atuais em &target, opcionalmente usando o formato especificado                                                                    |
+| FILTER       | FILTER                                                        | Indique que esta mensagem de bate-papo deve ser filtrada e encerrada                                                                                                            |
+| MODIFY       | MODIFY(<newmessage>)                                          | Defina novo conteúdo para esta mensagem de chat                                                                                                                                 |
+| PASS         | PASS                                                          | Indique que esta mensagem de chat deve PASSAR no filtro e encerrar                                                                                                              |
+## Links Úteis
 
-| Nome | Forma de Usar | Descrição |
-|------|-------------|-----------|
-| CLEARCRAFTING | `CLEARCRAFTING()` | Limpa a fila de criação automática |
-| CRAFT | `CRAFT(<item[:damage]>,[amount],[throw],[verbose])` | Adiciona um pedido de criação automática na fila |
-| CRAFTANDWAIT | `CRAFTANDWAIT(<item[:id]>,[amount],[throw],[verbose])` | Adiciona um pedido de criação automática na fila e espera pela conclusão |
-| DISCONNECT | `DISCONNECT()` | Desconecta do jogo ou servidor atual |
-| GETID | `GETID(<x>,<y>,<z>,<#idvar>,[#datavar])` | Obtém o ID e, opcionalmente, o valor de dados do bloco nas coordenadas especificadas |
-| GETIDREL | `GETIDREL(<xoffset>,<yoffset>,<zoffset>,<#idvar>,[#datavar])` | Obtém o ID e, opcionalmente, o valor de dados do bloco nas coordenadas relativas ao jogador |
-| GETITEMINFO | `GETITEMINFO(<item[:damage]>,[<&namevar>],[#maxstacksize],[&type],[#dropid])` | Obtém o nome e outras informações do item pelo ID |
-| ELSE | `ELSE` | Define uma condição alternativa em um bloco de decisão |
-| ELSEIF | `ELSEIF(<condition>)` | Define uma condição adicional dentro de um bloco de decisão |
-| ENDIF | `ENDIF` | Finaliza uma estrutura de decisão IF |
-| GETSLOT | `GETSLOT(<item[:damage]>,<#idvar>,[startfromslotid])` | Obtém o ID do slot contendo um item correspondente ao ID especificado |
-| GETSLOTITEM | `GETSLOTITEM(<slotid>,<#idvar>,[#stacksizevar],[#datavar])` | Obtém informações sobre o item no slot especificado |
-| IF | `IF(<condition>)` | Define uma condição para a execução do código |
-| IFBEGINSWITH | `IFBEGINSWITH(<haystack>,<needle>)` | Verifica se uma string começa com outra string |
-| IFCONTAINS | `IFCONTAINS(<haystack>,<needle>)` | Verifica se uma string contém outra string |
-| IFENDSWITH | `IFENDSWITH(<haystack>,<needle>)` | Verifica se uma string termina com outra string |
-| IFMATCHES | `IFMATCHES(<subject>,<pattern>,[&target],[group])` | Verifica se uma string corresponde a um padrão de expressão regular |
-| INVENTORYDOWN | `INVENTORYDOWN([amount])` | Rola o número especificado de slots para baixo na barra de atalho |
-| INVENTORYUP | `INVENTORYUP([amount])` | Rola o número especificado de slots para cima na barra de atalho |
-| ITEMID | `ITEMID(<item>)` | Obtém o ID numérico legível do item |
-| ITEMNAME | `ITEMNAME(<id>)` | Obtém a descrição do item para um ID numérico |
-| LOGTO | `LOGTO(<target>,<text>)` | Exibe o texto especificado no destino fornecido |
-| MATCH | `MATCH(<subject>,<pattern>,[&target],[group],[default])` | Executa uma correspondência de expressão regular |
-| NEXT | `NEXT` | Finaliza um loop FOR-NEXT |
-| PROMPT | `PROMPT(<&target>,<paramstring>,[prompt],[override],[default])` | Exibe uma caixa de entrada de texto para o usuário |
-| REPLACE | `REPLACE(<&subject>,<search>,[replace])` | Substitui todas as ocorrências de uma string por outra |
-| SET | `SET(<target>,[value])` | Define o valor de uma variável |
-| UNSET | `UNSET(<flag>)` | Remove a definição de uma variável |
-| UNTIL | `UNTIL(<condition>)` | Finaliza um loop DO-UNTIL baseado em uma condição |
-| WHILE | `WHILE(<condition>)` | Finaliza um loop DO-WHILE enquanto a condição for verdadeira |
+- [Download do MOD](https://www.liteloader.com/mod/macros) `macro.litemod\lang\macros\scriptin\en_GB.xml`
+- [Macro - Snowdev](https://macro.snowdev.com.br/developers/commands)
 
+---
+Escrito em 16/02/2025
